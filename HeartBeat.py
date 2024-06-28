@@ -14,6 +14,10 @@ osdistro = ""
 osver = ""
 url = ""
 
+def checkConfig():
+    if (data == ""):
+        print("Invalid syntax in config, please check docs.")
+
 def runningTimer():
     response = requests.get(url)
     status_code = requests.status_codes
