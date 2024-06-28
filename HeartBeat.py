@@ -37,7 +37,8 @@ if not usingLinux:
     exit()
 else:
     print(f"You are using Linux {osdistro} version {osver}.")
-    schedule.every(10).minutes.do(runningTimer)
+    runningTimer
+    # schedule.every(10).minutes.do(runningTimer)
 
 while True:
     schedule.run_pending()
