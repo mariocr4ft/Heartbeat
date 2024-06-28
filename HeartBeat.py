@@ -17,8 +17,10 @@ url = ""
 def checkConfig():
     if (data == ""):
         print("Invalid syntax in config, please check docs.")
+        exit()
 
 def runningTimer():
+    checkConfig()
     response = requests.get(url)
     status_code = requests.status_codes
     if response.status_code == 200:
