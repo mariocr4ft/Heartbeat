@@ -6,7 +6,6 @@ import schedule
 import time
 import json
 
-
 osType = platform.system()
 
 usingLinux = False
@@ -15,23 +14,26 @@ osver = ""
 url = ""
 
 def checkConfig():
-    if (data == ""):
+    if url == "":
         print("Invalid syntax in config, please check docs.")
         exit()
 
 def runningTimer():
     checkConfig()
-    response = requests.get(url)
-    status_code = requests.status_codes
-    if response.status_code == 200:
-        print("Heartbeat connected correctly. Code 200.")
-    else:
-        print("Error connecting to the heartbeat. Please check the firewall or have this code as a reference. Code: "+status_code)
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("Heartbeat connected correctly. Code 200.")
+        else:
+            print("Error connecting to the heartbeat. Please check the firewall or have this code as a reference. Code: " + str(response.status_code))
+    except requests.exceptions.RequestException as e:
+        print(f"Error connecting to the heartbeat: {e}")
 
 with open('config.json', 'r') as file:
     data = json.load(file)
     url = data['url']
 
+# Comprobar el sistema operativo
 if osType == "Linux":
     usingLinux = True
     osdistro = distro.name()
@@ -43,10 +45,9 @@ if not usingLinux:
     exit()
 else:
     print(f"You are using Linux {osdistro} version {osver}.")
-    runningTimer
-    # schedule.every(10).minutes.do(runningTimer)
+    runningTimer()
+    schedule.every(10).minutes.do(runningTimer)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
-
