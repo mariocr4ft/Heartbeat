@@ -13,6 +13,9 @@ osdistro = ""
 osver = ""
 url = ""
 
+def startOnRun():
+    print("Welcome to Heartbeat")
+
 def checkConfig():
     if url == "":
         print("Invalid syntax in config, please check docs.")
@@ -44,6 +47,7 @@ if not usingLinux:
     print("If you think this is an error, please report it at https://github.com/mariocr4ft/Heartbeat/issues")
     exit()
 else:
+    startOnRun()
     print(f"You are using Linux {osdistro} version {osver}.")
     runningTimer()
     schedule.every(10).minutes.do(runningTimer)
